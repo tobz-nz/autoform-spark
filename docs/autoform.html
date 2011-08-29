@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Autoform</title>
+
+<style type="text/css" media="all">@import url('./userguide.css');</style>
+<link rel="stylesheet" type="text/css" media="all" href="autoform_files/userguide.css">
+
+<meta http-equiv="expires" content="-1">
+<meta http-equiv="pragma" content="no-cache">
+<meta name="robots" content="all">
+
+</head>
+<body>
+
+<br clear="all">
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Autoform Library for Codeigniter</h1>
+
+<p>Autoform is a library that take the hassle out of creating html forms. It can generate entire forms based on a table in your database, with all validation code in place.</p>
+<p class="important"><strong>Note:</strong> Autoform Loads the form_validation class(if it has not already been loaded), so you do not need to load it manually.</p>
+
+<p>Features:</p>
+
+<ul>
+	<li>Quickly Build entire form, including labels &amp; validation error messages for each element</li>
+	<li>Forms can be automatically generated from a database table or sql query</li>
+</ul>
+
+<h2>Labels &amp; Error Messages</h2>
+<p>Labels are added in before each field, the contents of the label(by default - it can be overwritten) is the name of the field capitalized and underscores set to spaces. eg: a field named "my_field" would have a label "My Field".</p>
+<p>Errors, by default will replace the label content. This can be stopped by setting <var>$this->autoform->inline_errors = FALSE;</var>.</p>
+<p>Fields that have an error message will will have the classname "error" added to both the label and the field itself.</p>
+
+<h1>Database generation</h1>
+<p>This is an example of how to build a form automatically from a database.</p>
+
+<h2>Generate form from a database table</h2>
+<p>Specify the database table name</p>
+<code>
+class Form_example extends Controller {
+	
+	function index() {		
+		$this->load->library('autoform');
+		
+		$this->autoform->table('my_table');
+		echo $this->autoform->generate('form/test');
+		
+	}
+	
+	function test() {
+	  
+	  $this->load->library('autoform');
+	  
+	  $this->form_validation->set_rules('name','Name','trim|required');
+	  $this->form_validation->set_rules('email','Email','trim|required|valid_email');
+	
+	  if ($this->form_validation->run() == FALSE) {
+	  	
+	  	$this->autoform->table('my_table');
+	  	echo $this->autoform->generate('form/test');
+	  	
+	  }
+	  else {
+	  	
+	  	// do processing
+	  	
+	  }
+	}
+}
+</code>
+
+<h2>Generate form from a database query</h2>
+<p>Sometimes, its usful to to use a query result to generate your form - with all values pre-populated. <br />
+Do this by either entering an SQL query or even a CI query object into the sql() method.</p>
+<code>
+$this->autoform->sql('SELECT id, name, email FROM my_table WHERE id = 1');
+echo $this->autoform->generate('form/test');
+
+// or:
+
+$query = $this->db->get_where('my_table', array('id'=>1));
+$this->autoform->sql($query);
+echo $this->autoform->generate('form/test');
+
+</code>
+
+
+
+<h1>Customize output</h1>
+<p>You probably don't always want to output every field in your database table. so here are a few examples of how to customize the final form.</p>
+
+<code>
+function index() {		
+	$this->load->library('autoform');
+	
+	$this->autoform->table('my_table');
+	
+	// remove some fields
+	$this->autoform->remove(array('unwanted_field','another_unwanted_field'));
+	
+	// change some attributes of a field
+	$this->autoform->set('email', array('type'=>'email', 'class'=>'classname', 'required'=>'required'));	
+	$this->autoform->set('name', array('value'=>$name)); // note: the value with always be overwritten on validation to the posted value.
+		
+	echo $this->autoform->generate('form/test');
+	
+}
+</code>
+
+<h2>Output Separation</h2>
+<p>You can even output each part of the form separately. <strong>Note:</strong> the open / close methods are the same as Ci's form helper with the exception of the third parameter for open(), which is a boolean that sets the form as multipart.</p>
+<code>
+function index() {		
+	$this->load->library('autoform');
+	
+	$this->autoform->table('my_table');
+	
+	echo $this->autoform->open('form/test', array('id'=>'form'), FALSE);
+	
+	echo $this->autoform->fields(array('email', 'name')); // if this parameter is left empty, all fields are returned in the order they were created.
+	echo $this->autoform->field('id');
+	
+	echo $this->autoform->close();
+		
+}
+</code>
+
+
+<h2>Adding fields manually</h2>
+
+<p>A lot of the time you will need to add extra fields, or not even use a database at all. Here's how:</p>
+<p>Notice how how the add() method also returns the compiled field.</p>
+<p>Here I've included an example of changing the labels text &amp; attributes</p>
+
+<code>
+function index() {		
+	$this->load->library('autoform');
+	
+
+	echo $this->autoform->open('form/test', array('id'=>'form'), TRUE); // third param set the form as multipart, for uploading files
+	
+	echo $this->autoform->add(array('name'=>'upload', 'type'=>'file', 'label'=>'Upload your file here'));
+	echo $this->autoform->add(array('name'=>'tick_me', 'type'=>'checkbox', 'value'=>1, 'checked'=>FALSE, 'label'=>array('content'=>'Tick me before you can upload','class'=>'monkey')));
+	echo $this->autoform->add(array('name'=>'choose_me', 'type'=>'select', 'value'=>1, 'options'=>arrary('1'=>'option 1', '2'=>'option 2')));
+	
+	echo $this->autoform->close();
+		
+}
+</code>
+
+
+<h1>Autoform Function Reference</h1>
+
+<h3>$this-&gt;autoform-&gt;add()</h3>
+<p>Adds a field to the form. Expects an array of attributes. returns the compiled label/field. <br />
+<strong>Note:</strong> Don't echo this if you are using the Generate() method, or you'll get it twice.</p>
+<code>echo $this-&gt;autoform-&gt;add(array('name'=>'foo','type'='text', 'value'=>'monkeys'))</code>
+
+<h3>$this-&gt;autoform-&gt;remove()</h3>
+<p>Remove unwanted fields from the form</p>
+<code>$this-&gt;autoform-&gt;remove(<var>array('field1_id','field2_id')</var>)</code>
+
+<h3>$this-&gt;autoform-&gt;set()</h3>
+<p>Set/Change attributes of a field</p>
+<code>$this-&gt;autoform-&gt;set('<var>field_id</var>', <var>array('attr'=>'value')</var>)</code>
+
+<h3>$this-&gt;autoform-&gt;before()</h3>
+<p>Insert a string before a field(in front of the label)</p>
+<code>$this-&gt;autoform-&gt;before('<var>field_id</var>', '<var>&lt;div class="wrapper"&gt;</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;after()</h3>
+<p>Insert a string after a field</p>
+<code>$this-&gt;autoform-&gt;after('<var>field_id</var>', '<var>&lt;/div&gt;</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;field()</h3>
+<p>Get a field's finalized html</p>
+<code>$this-&gt;autoform-&gt;field('<var>field_id</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;fields()</h3>
+<p>Returns the finalized html string of all fields in the form. <br />
+The optional first paramter is an array of field id's of which to output(in the order specified in the array)</p>
+<code>$this-&gt;autoform-&gt;fields(<var>array('field3','field1','field2')</var>)</code>
+
+<h3>$this-&gt;autoform-&gt;get()</h3>
+<p>Returns a single value or an array of values for the supplied attributes</p>
+<code>$this-&gt;autoform-&gt;get('<var>field_id</var>', <var>array('value','class')</var>)</code>
+<code>$this-&gt;autoform-&gt;get('<var>field_id</var>', '<var>value</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;label()</h3>
+<p>Returns the label of a form. Third parameter is a boolean, if set to FALSE only the label's text will be returned without the label tag.(errors will be wrapped in &lt;span class="error"&gt;)</p>
+<code>$this-&gt;autoform-&gt;label('<var>field_id</var>','<var>Fallback text(used instead of default label)</var>', <var>FALSE</var>)</code>
+
+<h3>$this-&gt;autoform-&gt;open()</h3>
+<p>Returns the opening tag of the form. The first parameter is the uri to submit the form to. <br />The second is an array of attributes, and the third is a boolean(TRUE/FALSE) of whether the form is encoded as multipart, for file uploads.</p>
+<code>$this-&gt;autoform-&gt;open('<var>form/process</var>', <var>array('id'=>'my_form')</var>, TRUE)</code>
+
+<h3>$this-&gt;autoform-&gt;close()</h3>
+<p>Returns the close tag of the form(exactly the same as CI's form_close() function).</p>
+<code>$this-&gt;autoform-&gt;close('<var>optional text to append to the returned string</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;generate()</h3>
+<p>Returns the entire form. paramters are the same as $this-&gt;autoform-&gt;open()</p>
+<code>$this-&gt;autoform-&gt;generate('<var>form/process</var>', <var>array('id'=>'my_form')</var>)</code>
+
+<h3>$this-&gt;autoform-&gt;table()</h3>
+<p>Specifies a database table to base the form on</p>
+<code>$this-&gt;autoform-&gt;table('<var>table_name</var>')</code>
+
+<h3>$this-&gt;autoform-&gt;sql()</h3>
+<p>SQl query string(or CI query result object) to base the form on</p>
+<code>$this-&gt;autoform-&gt;sql('<var>SELECT * FROM table_name</var>')</code>
+<p>or use a query object</p>
+<code>$query = $this-&gt;db-&gt;get('my_table');
+$this-&gt;autoform-&gt;sql(<var>$query</var>)
+</code>
+
+<h3>$this-&gt;autoform-&gt;set_error()</h3>
+<p>Manually add an error message to a field</p>
+<code>$this-&gt;autoform-&gt;set_error('field_id', 'Error message')</code>
+
+
+<h3>$this-&gt;autoform-&gt;clear()</h3>
+<p>Resets the form(removes all fields and buttons)</p>
+<code>$this-&gt;autoform-&gt;clear()</code>
+
+<h3>$this-&gt;autoform-&gt;buttons()</h3>
+<p>Sets the forms submit buttons.</p>
+<code>$this-&gt;autoform-&gt;buttons(form_submit(<var>array('type'=>'submit', 'content'=>'submit form')</var>))</code>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+  <a href="">Autoform</a> &nbsp;·&nbsp; 
+  <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/nz/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"/></a>&nbsp;·&nbsp; 
+  <a href="http://twitter.com/t0bz">Toby Evans</a>
+</p>
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/nz/">Creative Commons Attribution-ShareAlike 3.0 New Zealand License</a></p>
+</div>
+
+</body></html>

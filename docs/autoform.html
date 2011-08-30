@@ -20,10 +20,10 @@
 <div id="content">
 
 
-<h1>Autoform Library for Codeigniter</h1>
+<h1>Autoform Spark for Codeigniter</h1>
 
-<p>Autoform is a library that take the hassle out of creating html forms. It can generate entire forms based on a table in your database, with all validation code in place.</p>
-<p class="important"><strong>Note:</strong> Autoform Loads the form_validation class(if it has not already been loaded), so you do not need to load it manually.</p>
+<p>Autoform is a Library that takes the hassle out of creating html forms. It can generate entire forms based on a table in your database, with all validation code in place.</p>
+<p class="important"><strong>Note:</strong> Autoform Loads the array Helper and form_validation class(if they have not already been loaded)</p>
 
 <p>Features:</p>
 
@@ -46,7 +46,7 @@
 class Form_example extends Controller {
 	
 	function index() {		
-		$this->load->library('autoform');
+		$this->load->spark('autoform/[version]');
 		
 		$this->autoform->table('my_table');
 		echo $this->autoform->generate('form/test');
@@ -55,7 +55,7 @@ class Form_example extends Controller {
 	
 	function test() {
 	  
-	  $this->load->library('autoform');
+	  $this->load->spark('autoform/[version]');
 	  
 	  $this->form_validation->set_rules('name','Name','trim|required');
 	  $this->form_validation->set_rules('email','Email','trim|required|valid_email');
@@ -97,7 +97,7 @@ echo $this->autoform->generate('form/test');
 
 <code>
 function index() {		
-	$this->load->library('autoform');
+	$this->load->spark('autoform/[version]');
 	
 	$this->autoform->table('my_table');
 	
@@ -117,7 +117,7 @@ function index() {
 <p>You can even output each part of the form separately. <strong>Note:</strong> the open / close methods are the same as Ci's form helper with the exception of the third parameter for open(), which is a boolean that sets the form as multipart.</p>
 <code>
 function index() {		
-	$this->load->library('autoform');
+	$this->load->spark('autoform/[version]');
 	
 	$this->autoform->table('my_table');
 	
@@ -140,7 +140,7 @@ function index() {
 
 <code>
 function index() {		
-	$this->load->library('autoform');
+	$this->load->spark('autoform/[version]');
 	
 
 	echo $this->autoform->open('form/test', array('id'=>'form'), TRUE); // third param set the form as multipart, for uploading files
@@ -159,6 +159,8 @@ function index() {
 
 <h3>$this-&gt;autoform-&gt;add()</h3>
 <p>Adds a field to the form. Expects an array of attributes. returns the compiled label/field. <br />
+The name attribute is required, and if you do not supply them, both id and the label use the name. 
+<br /><br />
 <strong>Note:</strong> Don't echo this if you are using the Generate() method, or you'll get it twice.</p>
 <code>echo $this-&gt;autoform-&gt;add(array('name'=>'foo','type'='text', 'value'=>'monkeys'))</code>
 
@@ -205,7 +207,7 @@ The optional first paramter is an array of field id's of which to output(in the 
 <code>$this-&gt;autoform-&gt;close('<var>optional text to append to the returned string</var>')</code>
 
 <h3>$this-&gt;autoform-&gt;generate()</h3>
-<p>Returns the entire form. paramters are the same as $this-&gt;autoform-&gt;open()</p>
+<p>Returns the entire form. parameters are the same as $this-&gt;autoform-&gt;open()</p>
 <code>$this-&gt;autoform-&gt;generate('<var>form/process</var>', <var>array('id'=>'my_form')</var>)</code>
 
 <h3>$this-&gt;autoform-&gt;table()</h3>

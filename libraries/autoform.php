@@ -49,7 +49,7 @@ class Autoform {
     $this->CI =& get_instance();
     // load required libraries & helpers
     $this->CI->load->library('form_validation');
-    $this->CI->load->helper('form');
+    $this->CI->load->helper(array('form','url'));
     
     // remove <p>...</p> from error messages (spaces are trimmed later)
     $this->CI->form_validation->set_error_delimiters(' ',' ');

@@ -888,7 +888,7 @@ class Autoform {
     if(is_array($data) || is_object($data)) {
       $result = array(); 
       foreach($data as $key => $value) { 
-        $result[$key] = object_to_array($value); 
+        $result[$key] = $this->object_to_array($value); 
       }
       return $result;
     }

@@ -53,6 +53,9 @@ class Autoform {
     
     // remove <p>...</p> from error messages (spaces are trimmed later)
     $this->CI->form_validation->set_error_delimiters(' ',' ');
+
+    // set fields as an empty object
+    $this->fields = new stdClass();
     
     // set default buttons
     $this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'));

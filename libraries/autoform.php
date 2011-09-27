@@ -14,7 +14,7 @@
 class Autoform {
 
   private $CI;
-  public $fields = array();
+  public $fields;
   public $buttons = '';
   private $before = array();
   private $after = array();
@@ -536,6 +536,14 @@ class Autoform {
         else {
 	    		$output .= $this->textarea($field);
     		}
+      break;
+
+      case 'button':
+      case 'submit':
+      case 'image':
+        // remove the label
+        unset($field->label);
+        $output .= form_button($this->object_to_array($field));
       break;
       
       case 'text':

@@ -14,7 +14,7 @@
 class Autoform {
 
   private $CI;
-  public $fields;
+  public $fields = array();
   public $buttons = '';
   private $before = array();
   private $after = array();

@@ -1,15 +1,25 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 /**
+ *
  * Autoform
  *
  * A class for simplifying the process of creating
  * html forms Built for the Codeigniter Framework.
- * 
- * Check here for updates: http://twitter.com/t0bz
  *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Attribution-ShareAlike 3.0 that is
+ * bundled with this package in the files license.txt.  It is
+ * also available through the world wide web at this URL:
+ * http://creativecommons.org/licenses/by-sa/3.0/nz/
+ *
+ * @package   Autoform
  * @author    Toby Evans (@t0bz)
+ * @copyright Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license   http://creativecommons.org/licenses/by-sa/3.0/nz/
+ * @link      http://getsparks.org/packages/autoform/versions/HEAD/show
+ * @since     Version 3.0
+ * @filesource
  */
 class Autoform {
 

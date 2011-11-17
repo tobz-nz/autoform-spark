@@ -158,6 +158,10 @@ class Autoform {
 		
 		// run validation first
 		$this->validate($this->fields->$id);
+
+		// set before/after text
+		if (isset($before)) $this->set($id, array('before'=>$before));
+		if (isset($after)) $this->set($id, array('after'=>$after));
 		
 		// return final string
 		if ($return_object==FALSE) {

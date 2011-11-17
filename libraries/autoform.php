@@ -497,11 +497,11 @@ class Autoform {
 						break;
 						case 'right':
 							$output .= $this->dropdown($field);
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= ' '.form_label($field->label->content, $field->id, $field->label->extra);
 						break;
 						case 'left':
 						default:
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= form_label($field->label->content, $field->id, $field->label->extra).' ';
 							$output .= $this->dropdown($field);
 						break;
 					}
@@ -522,11 +522,11 @@ class Autoform {
 						break;
 						case 'right':
 							$output .= $this->checked_input($field);
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= ' '.form_label($field->label->content, $field->id, $field->label->extra);
 						break;
 						case 'left':
 						default:
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= form_label($field->label->content, $field->id, $field->label->extra).' ';
 							$output .= $this->checked_input($field);
 						break;
 					}
@@ -544,11 +544,11 @@ class Autoform {
 						break;
 						case 'right':
 							$output .= $this->textarea($field);
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= ' '.form_label($field->label->content, $field->id, $field->label->extra);
 						break;
 						case 'left':
 						default:
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= form_label($field->label->content, $field->id, $field->label->extra).' ';
 							$output .= $this->textarea($field);
 						break;
 					}
@@ -577,11 +577,11 @@ class Autoform {
 						break;
 						case 'right':
 							$output .= $this->input($field);
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= ' '.form_label($field->label->content, $field->id, $field->label->extra);
 						break;
 						case 'left':
 						default:
-							$output .= form_label($field->label->content, $field->id, $field->label->extra);
+							$output .= form_label($field->label->content, $field->id, $field->label->extra).' ';
 							$output .= $this->input($field);
 						break;
 					}

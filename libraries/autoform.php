@@ -229,6 +229,12 @@ class Autoform {
           // apply new label
           $this->fields->$field_id->$key = $label;
         }
+        elseif ($key=='after') {
+          $this->after($field_id, $value);
+        }
+        elseif ($key=='before') {
+          $this->before($field_id, $value);
+        }
         else {
           // apply other attributes
           $this->fields->$field_id->$key = $value;

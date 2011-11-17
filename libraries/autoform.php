@@ -667,7 +667,7 @@ class Autoform {
     }
     
     // set checked status
-    $field->checked = ($this->CI->input->post($field->name) == $field->value ? true : false);
+    $field->checked = (isset($_POST[$field->name]) && $this->CI->input->post($field->name) == $field->value ? true : false);
     
     // set checked status on posted array (fieldname[])
 		$raw_name = preg_replace('/^(.{0,})(\[\])$/', '$1', $field->name); // remove ending []

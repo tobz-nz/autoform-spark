@@ -15,7 +15,7 @@
  *
  * @package   Autoform
  * @author    Toby Evans (@t0bz)
- * @copyright Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @copyright Copyright (c) 2011, Toby Evans.
  * @license   http://creativecommons.org/licenses/by-sa/3.0/nz/
  * @link      http://getsparks.org/packages/autoform/versions/HEAD/show
  * @since     Version 3.0

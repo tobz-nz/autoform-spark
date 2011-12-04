@@ -83,7 +83,12 @@ class Autoform {
 		// setup default label
 		$label->content = ucwords(preg_replace("/[_-]/",' ', $input['name']));
 		$label->for = (isset($input['id']) ? $input['id'] : url_title($input['name']));
-		$label->position = 'left';
+		if (isset($input['type'])&&$input['type']=='checkbox' || isset($input['type'])&&$input['type']=='radio') {
+			$label->position = 'right'; // radio/checkbox labels default to the right
+		}
+		else {
+			$label->position = 'left'; // everything else, labels default to the left
+		}
 		$label->extra = array();
 		
 		// set all field attributes

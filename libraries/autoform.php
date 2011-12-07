@@ -68,7 +68,7 @@ class Autoform {
 		$this->fields = new stdClass();
 		
 		// set default buttons
-		$this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'));
+		$this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'))."\n";
 		
 	}
 	
@@ -600,7 +600,7 @@ class Autoform {
 		// add "after" string to output
 		if (isset($this->after[$field->id])) $output .= $this->after[$field->id];
 		
-		return $output;
+		return $output."\n";
 		
 	}
 	
@@ -733,10 +733,10 @@ class Autoform {
 	public function open($action, $attr=array('method'=>'post'), $multipart=FALSE) {
 		if ( ! isset($attr['method'])) $attr['method'] = 'post'; // set to POST as default
 		if ($multipart==TRUE) {
-			return form_open_multipart($action, $attr);
+			return form_open_multipart($action, $attr)."\n";
 		}
 		else {
-			return form_open($action, $attr);
+			return form_open($action, $attr)."\n";
 		}
 	}
 	
@@ -776,7 +776,7 @@ class Autoform {
 	 */
 	public function close($extra='') {
 		$this->clear(); // clear the form
-		return form_close($extra);
+		return form_close($extra)."\n";
 	}
 	
 	/**

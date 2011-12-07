@@ -622,6 +622,10 @@ class Autoform {
 			}
 		}
 		if (!isset($field->value)) $field->value = '';
+
+		// set value as posted value
+		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
+
 		
 		return form_input($data, htmlspecialchars($field->value, ENT_COMPAT, "UTF-8"), $this->stringify($extra));
 	}
@@ -643,6 +647,9 @@ class Autoform {
 			}
 		}
 		if (!isset($field->value)) $field->value = '';
+
+		// set value as posted value
+		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
 
 		return form_textarea($data, $field->value);
 	}
@@ -713,11 +720,10 @@ class Autoform {
 				$extra[$key] = $value;
 			}
 		}
+		if (!isset($field->value)) $field->value = '';
 		
-		// set the value to posted value if none was specifically set
-		if (!$field->value) {
-			$field->value = $this->CI->input->post($name);
-		}
+		// set value as posted value
+		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
 		
 		return form_dropdown($name, $options, $field->value, $this->stringify($extra));
 	}

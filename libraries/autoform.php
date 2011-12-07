@@ -901,6 +901,9 @@ class Autoform {
 		if ($primary_key) {
 			return 'hidden';
 		}
+		else if ($type == 'text') {
+			return 'textarea';
+		}
 		else if ( isset ($this->field_types[$type])) {
 			return $this->field_types[$type];
 		}

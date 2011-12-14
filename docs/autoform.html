@@ -43,13 +43,13 @@
 <h2>Generate form from a database table</h2>
 <p>Specify the database table name</p>
 <code>
-class Form_example extends Controller {
+class Form_example extends CI_Controller {
 	
 	function index() {		
 		$this->load->spark('autoform/[version]');
 		
 		$this->autoform->table('my_table');
-		echo $this->autoform->generate('form/test');
+		echo $this->autoform->generate('form_example/test');
 		
 	}
 	
@@ -63,7 +63,7 @@ class Form_example extends Controller {
 	  if ($this->form_validation->run() == FALSE) {
 	  	
 	  	$this->autoform->table('my_table');
-	  	echo $this->autoform->generate('form/test');
+	  	echo $this->autoform->generate('form_exmaple/test');
 	  	
 	  }
 	  else {
@@ -80,13 +80,13 @@ class Form_example extends Controller {
 Do this by either entering an SQL query or even a CI query object into the sql() method.</p>
 <code>
 $this->autoform->sql('SELECT id, name, email FROM my_table WHERE id = 1');
-echo $this->autoform->generate('form/test');
+echo $this->autoform->generate('form_example/test');
 
 // or:
 
 $query = $this->db->get_where('my_table', array('id'=>1));
 $this->autoform->sql($query);
-echo $this->autoform->generate('form/test');
+echo $this->autoform->generate('form_exmaple/test');
 
 </code>
 
@@ -108,7 +108,7 @@ function index() {
 	$this->autoform->set('email', array('type'=>'email', 'class'=>'classname', 'required'=>'required'));	
 	$this->autoform->set('name', array('value'=>$name)); // note: the value with always be overwritten on validation to the posted value.
 		
-	echo $this->autoform->generate('form/test');
+	echo $this->autoform->generate('form_exmaple/test');
 	
 }
 </code>
@@ -121,7 +121,7 @@ function index() {
 	
 	$this->autoform->table('my_table');
 	
-	echo $this->autoform->open('form/test', array('id'=>'form'), FALSE);
+	echo $this->autoform->open('form_exmaple/test', array('id'=>'form'), FALSE);
 	
 	echo $this->autoform->fields(array('email', 'name')); // if this parameter is left empty, all fields are returned in the order they were created.
 	echo $this->autoform->field('id');
@@ -143,7 +143,7 @@ function index() {
 	$this->load->spark('autoform/[version]');
 	
 
-	echo $this->autoform->open('form/test', array('id'=>'form'), TRUE); // third param set the form as multipart, for uploading files
+	echo $this->autoform->open('form_exmaple/test', array('id'=>'form'), TRUE); // third param set the form as multipart, for uploading files
 	
 	echo $this->autoform->add(array('name'=>'upload', 'type'=>'file', 'label'=>'Upload your file here'));
 	echo $this->autoform->add(array('name'=>'tick_me', 'type'=>'checkbox', 'value'=>1, 'checked'=>FALSE, 'label'=>array('content'=>'Tick me before you can upload','class'=>'monkey')));

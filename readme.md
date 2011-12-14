@@ -18,7 +18,6 @@ If your not basing your form an a DB table, that's fine too - you can build a fo
 	// a new field thats not from the database
 	$this->autoform->add(array('name'=>'new_field', 'value'=>'my Value', 'type'=>'select', 'options'=>array('option 1'=>'First option', 'option 2'=>'second option')));
 
-	// note: the value will always be overwritten to the valued posted if the form fails validation.
 	echo $this->autoform->generate('form/test');
 
 
@@ -35,5 +34,7 @@ If your not basing your form an a DB table, that's fine too - you can build a fo
 	
 	echo $this->autoform->close();
 
+
+Note: the value will always be overwritten to the value posted if the form fails validation.
 
 Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for more in depth documentation.

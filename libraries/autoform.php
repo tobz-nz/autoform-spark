@@ -28,7 +28,7 @@ class Autoform {
 	public $buttons = '';
 	private $before = array();
 	private $after = array();
-	private $inline_errors = TRUE;
+	public $inline_errors = TRUE;
 	private $field_types = array (
 	'timestamp'=>'date',
 	'checkbox'=>'checkbox',

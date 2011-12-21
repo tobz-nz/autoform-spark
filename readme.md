@@ -1,5 +1,5 @@
 Autoform is a library that takes the hassle out of creating html forms. It can generate entire forms based on a table or sql query in your database, with all validation code in place.
-If your not basing your form an a DB table, that's fine too - you can build a form easily with a few simple lines.
+If you’re not basing your form an a DB table, that's fine too - you can build a form easily with a few simple lines.
 
 # Some Basic Usage
 

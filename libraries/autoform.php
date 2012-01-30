@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  *
  * Autoform
@@ -55,7 +55,8 @@ class Autoform {
 	'range'=>'range',
 	'color'=>'color');
 	
-	function __construct() {
+	function __construct() 
+	{
 		$this->CI =& get_instance();
 		// load required libraries & helpers
 		$this->CI->load->library('form_validation');
@@ -78,12 +79,14 @@ class Autoform {
 	 * @param Array $input
 	 * @return Mixed
 	 */
-	public function add($input, $return_object=FALSE) {
+	public function add($input, $return_object=FALSE) 
+	{
 		
 		// setup default label
 		$label->content = ucwords(preg_replace("/[_-]/",' ', $input['name']));
 		$label->for = (isset($input['id']) ? $input['id'] : url_title($input['name']));
-		if (isset($input['type'])&&$input['type']=='checkbox' || isset($input['type'])&&$input['type']=='radio') {
+		if (isset($input['type'])&&$input['type']=='checkbox' || isset($input['type'])&&$input['type']=='radio') 
+		{
 			$label->position = 'right'; // radio/checkbox labels default to the right
 		}
 		else {
@@ -92,17 +95,22 @@ class Autoform {
 		$label->extra = array();
 		
 		// set all field attributes
-		foreach ($input as $key=>$value) {
+		foreach ($input as $key=>$value) 
+		{
 			
 			// add label
-			if ($key=='label') {
-				if ( ! is_array($value)) {
+			if ($key=='label') 
+			{
+				if ( ! is_array($value)) 
+				{
 					$label->content = ($value); // set label text
 				}
 				else {
 					// set all label attributes
-					foreach ($value as $key2=>$value2) {
-						switch ($key2) {
+					foreach ($value as $key2=>$value2) 
+					{
+						switch ($key2) 
+						{
 							case 'content':
 								$label->content = form_prep($value2);
 							break;
@@ -119,12 +127,14 @@ class Autoform {
 					}
 				}
 			}
-			elseif ($key=='type') {
+			elseif ($key=='type') 
+			{
 				// use type as defined in $this->field_types array if it exists
 				$field_obj->$key = element($value, $this->field_types, $value);
 				// also set a smaller row number for text areas if a value has not been supplied
-				if ($field_obj->$key=='textarea') {
-					if (!isset($field_obj->rows)) $field_obj->rows = 5;
+				if ($field_obj->$key=='textarea') 
+				{
+					if ( ! isset($field_obj->rows)) $field_obj->rows = 5;
 				}
 			} 
 			else {
@@ -134,7 +144,8 @@ class Autoform {
 		}
 		
 		// remove ending [] from label for arrayed fields
-		if ($label->content) {
+		if ($label->content) 
+		{
 			$label->content = preg_replace('/^(.{0,})(\[\])$/', '$1', $label->content);
 		}
 		
@@ -142,18 +153,20 @@ class Autoform {
 		$field_obj->label = $label;
 		
 		// add id if it was not included
-		if ( ! isset($field_obj->id)) {
+		if ( ! isset($field_obj->id)) 
+		{
 			// set id the same as name
 			$field_obj->id = $field_obj->name;
 			// remove ending [] in id for arrayed fields
 			$field_obj->id = preg_replace('/^(.{0,})(\[\])$/', '$1', $field_obj->id);
 		}
 		// add value if it was not included
-		if ( ! isset($field_obj->value)) $field_obj->value = false;
+		if ( ! isset($field_obj->value)) $field_obj->value = FALSE;
 		
 		// check if id is not explicitly set and if field with same id exists, make it uniue
 		$id = $field_obj->id;
-		if ( ! isset($input['id'])) {
+		if ( ! isset($input['id'])) 
+		{
 			$this->unique_id($field_obj);
 		}
 		
@@ -169,7 +182,8 @@ class Autoform {
 		if (isset($after)) $this->set($id, array('after'=>$after));
 		
 		// return final string
-		if ($return_object==FALSE) {
+		if ($return_object==FALSE) 
+		{
 			
 			// build field output and return it
 			return $this->build($this->fields->$id);
@@ -185,9 +199,12 @@ class Autoform {
 	 * @param Mixed $fields
 	 * @return 
 	 */  
-	public function remove($fields) {
-		if (is_array($fields)) {
-			foreach ($fields as $field) {
+	public function remove($fields) 
+	{
+		if (is_array($fields)) 
+		{
+			foreach ($fields as $field) 
+			{
 				$id = $field;
 				if (isset($this->fields->$id)) unset($this->fields->$id);
 			}
@@ -205,21 +222,28 @@ class Autoform {
 	 * @param Array $attr [optional]
 	 * @return Object
 	 */
-	public function set($field_id, $attr=array()) {
-		if (isset($this->fields->$field_id)) {
-			foreach ($attr as $key=>$value) {
+	public function set($field_id, $attr=array()) 
+	{
+		if (isset($this->fields->$field_id)) 
+		{
+			foreach ($attr as $key=>$value) 
+			{
 				
 				// set new label
-				if ($key=='label') {
+				if ($key=='label') 
+				{
 					$label = $this->fields->$field_id->label;
 					// if label is a string
-					if ( ! is_array($value)) {
+					if ( ! is_array($value)) 
+					{
 						$label->content = ($value); // set label text
 					}
 					else {
 						// else its an array
-						foreach ($value as $key2=>$value2) {
-							switch ($key2) {
+						foreach ($value as $key2=>$value2) 
+						{
+							switch ($key2) 
+							{
 								case 'content':
 									$label->content = ($value2);
 								break;
@@ -238,10 +262,12 @@ class Autoform {
 					// apply new label
 					$this->fields->$field_id->$key = $label;
 				}
-				elseif ($key=='after') {
+				elseif ($key=='after') 
+				{
 					$this->after($field_id, $value);
 				}
-				elseif ($key=='before') {
+				elseif ($key=='before') 
+				{
 					$this->before($field_id, $value);
 				}
 				else {
@@ -261,18 +287,23 @@ class Autoform {
 	 * @param String $fallback [optional]
 	 * @return Mixed
 	 */
-	public function get($field_id, $params=FALSE, $fallback='') {
+	public function get($field_id, $params=FALSE, $fallback='') 
+	{
 		$get = array();
-		if (is_array($params)) {
-			foreach ($params as $param) {
+		if (is_array($params)) 
+		{
+			foreach ($params as $param) 
+			{
 				$get[$param] = $this->get($field_id, $param);
 			}
 			return $get;
 		}
 		else {
-			if (isset($this->fields->$field_id)) {
+			if (isset($this->fields->$field_id)) 
+			{
 				$field = $this->fields->$field_id;
-				if (isset($field->$params) && $field->$params) {
+				if (isset($field->$params) && $field->$params) 
+				{
 					return $field->$params;
 				}
 				else {
@@ -292,11 +323,14 @@ class Autoform {
 	 * @param String $side [optional]
 	 * @return Object
 	 */
-	public function before($field_id, $input, $side='end') {
+	public function before($field_id, $input, $side='end') 
+	{
 
-		if (isset($this->before[$field_id])) {
+		if (isset($this->before[$field_id])) 
+		{
 			// add to existing string
-			if ($side=='start') {
+			if ($side=='start') 
+			{
 				// add in fron of existing
 				$this->before[$field_id] = $input . $this->before[$field_id];
 			}
@@ -307,7 +341,8 @@ class Autoform {
 		}
 		else {
 			// create new string
-			if ($side=='start') {
+			if ($side=='start') 
+			{
 				// add in front of string
 				$this->before[$field_id] = $input . $this->before[$field_id];
 			}
@@ -331,11 +366,14 @@ class Autoform {
 	 * @param String $side [optional]
 	 * @return Object
 	 */
-	public function after($field_id, $input, $side='end') {
+	public function after($field_id, $input, $side='end') 
+	{
 
-		if (isset($this->after[$field_id])) {
+		if (isset($this->after[$field_id])) 
+		{
 			// add to existing string
-			if ($side=='start') {
+			if ($side=='start') 
+			{
 				// add in fron of existing
 				$this->after[$field_id] = $input . $this->after[$field_id];
 			}
@@ -346,7 +384,8 @@ class Autoform {
 		}
 		else {
 			// create new string
-			if ($side=='start') {
+			if ($side=='start') 
+			{
 				// add in front of string
 				$this->after[$field_id] = $input . $this->after[$field_id];
 			}
@@ -367,13 +406,16 @@ class Autoform {
 	 * @param Object $field
 	 * @return Bool
 	 */
-	private function validate($fields) {
+	private function validate($fields) 
+	{
 		
 		$error = FALSE;
 		
-		if ( ! isset($fields->name)) {
+		if ( ! isset($fields->name)) 
+		{
 			// validate all fields
-			foreach ($fields as $field) {
+			foreach ($fields as $field) 
+			{
 				if ($this->validate($field) == FALSE) $error = TRUE;
 			}
 		}
@@ -385,20 +427,25 @@ class Autoform {
 		if(set_value($field->id)) $field->value = set_value($field->id); 
 		
 		// set class names
-		if (form_error($field->name)) {
-			if ($this->inline_errors==TRUE) {
+		if (form_error($field->name)) 
+		{
+			if ($this->inline_errors==TRUE) 
+			{
 				$field->label->content = trim(form_error($field->name));
 			}
 			// add error class to label
-			if (isset($field->label->extra['class']) && !preg_match('/error/', $field->label->extra['class'])) { 
+			if (isset($field->label->extra['class']) && !preg_match('/error/', $field->label->extra['class'])) 
+			{ 
 				$field->label->extra['class'] .= ' error';
 			}
-			elseif ( ! isset($field->label->extra['class'])) {
+			elseif ( ! isset($field->label->extra['class'])) 
+			{
 				$field->label->extra['class'] = 'error';
 			}
 			
 			// add error class to field
-			if (isset($field->class) && !preg_match('/error/', $field->class)) { 
+			if (isset($field->class) && !preg_match('/error/', $field->class)) 
+			{ 
 				$field->class .= ' error';
 			}
 			else {
@@ -418,8 +465,9 @@ class Autoform {
 	 * @param String $field_id
 	 * @return String
 	 */
-	public function field($field_id, $attr=FALSE) {
-		if ( ! isset($this->fields->$field_id)) return false;
+	public function field($field_id, $attr=FALSE) 
+	{
+		if ( ! isset($this->fields->$field_id)) return FALSE;
 		if (is_array($attr)) $this->set($field_id, $attr); // set new atrtributes
 		$this->validate($this->fields->$field_id); // validate
 		return $this->build($this->fields->$field_id); // build
@@ -433,24 +481,29 @@ class Autoform {
 	 * @param Bool $include_tag [optional]
 	 * @return String
 	 */
-	function label($field_id, $fallback='', $include_tag=TRUE) {
+	function label($field_id, $fallback='', $include_tag=TRUE) 
+	{
 		
-		if (isset($this->fields->$field_id)) {
+		if (isset($this->fields->$field_id)) 
+		{
 			
 			$field = $this->fields->$field_id;
 			$error=FALSE;
 			$this->validate($field); // run validation
 			// check if is error
-			if (form_error($field_id)) {
+			if (form_error($field_id)) 
+			{
 				$content = trim(form_error($field_id));
 				
-				if ($include_tag==FALSE) {
+				if ($include_tag==FALSE) 
+				{
 					// wrap error in a span.error
 					$content = '<span class="error">'.$content.'</span>';
 				}
 			}
 			else {
-				if ($fallback!='') {
+				if ($fallback!='') 
+				{
 					// use fallback??
 					$content = $fallback;
 				}
@@ -460,7 +513,8 @@ class Autoform {
 				}
 			}
 			
-			if ($include_tag==TRUE) {
+			if ($include_tag==TRUE) 
+			{
 				// return label
 				return form_label($content, $field->id, $field->label->extra);
 			}
@@ -479,7 +533,8 @@ class Autoform {
 	 * @param Object $field
 	 * @return String
 	 */
-	private function build($field) {
+	private function build($field) 
+	{
 		
 		$output = '';
 
@@ -487,16 +542,20 @@ class Autoform {
 		if (isset($this->before[$field->id])) $output .= $this->before[$field->id]; 
 		
 		// set default type
-		if ( ! isset($field->type)) {
+		if ( ! isset($field->type)) 
+		{
 			$field->type = 'text';
 		}
 		
-		switch ($field->type) {
+		switch ($field->type) 
+		{
 			case 'select':
 			case 'dropdown':
 				// add label
-				if ($field->label->content!='') {      		
-					switch ($field->label->position) {
+				if ($field->label->content!='') 
+				{      		
+					switch ($field->label->position) 
+					{
 						case 'wrap':
 							$output .= form_label($field->label->content . $this->dropdown($field), $field->id, $field->label->extra);
 						break;
@@ -520,8 +579,10 @@ class Autoform {
 			case 'radio':
 				// generate field
 				// add label
-				if ($field->label->content!='') {
-					switch ($field->label->position) {
+				if ($field->label->content!='') 
+				{
+					switch ($field->label->position) 
+					{
 						case 'wrap':
 							$output .= form_label($field->label->content . $this->checked_input($field), $field->id, $field->label->extra);
 						break;
@@ -542,8 +603,10 @@ class Autoform {
 			break;
 			case 'textarea':
 				// add label if field is not type hidden, or label->text is blank
-				if ($field->label->content!='' && $field->type!='hidden') {
-					switch ($field->label->position) {
+				if ($field->label->content!='' && $field->type!='hidden') 
+				{
+					switch ($field->label->position) 
+					{
 						case 'wrap':
 							$output .= form_label($field->label->content . $this->textarea($field), $field->id, $field->label->extra);
 						break;
@@ -575,8 +638,10 @@ class Autoform {
 			case 'hidden':
 			default:
 				// add label if field is not type hidden, or label->text is blank
-				if ($field->label->content!='' && $field->type!='hidden') {
-					switch ($field->label->position) {
+				if ($field->label->content!='' && $field->type!='hidden') 
+				{
+					switch ($field->label->position) 
+					{
 						case 'wrap':
 							$output .= form_label($field->label->content . $this->input($field), $field->id, $field->label->extra);
 						break;
@@ -610,18 +675,21 @@ class Autoform {
 	 * @param Object $field
 	 * @return String
 	 */
-	private function input($field) {
+	private function input($field) 
+	{
 		
 		$data = array('name'=>$field->name,'type'=>$field->type);
 		$extra = array();
 		
 		// work out attributes 
-		foreach ($field as $key=>$value) {
-			if ($key!='name' && $key != 'value' && $key != 'label' && $key != 'type') {
+		foreach ($field as $key=>$value) 
+		{
+			if ($key!='name' && $key != 'value' && $key != 'label' && $key != 'type') 
+			{
 				$extra[$key] = $value;
 			}
 		}
-		if (!isset($field->value)) $field->value = '';
+		if ( ! isset($field->value)) $field->value = '';
 
 		// set value as posted value
 		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
@@ -636,17 +704,20 @@ class Autoform {
 	 * @param Object $field
 	 * @return String
 	 */
-	private function textarea($field) {
+	private function textarea($field) 
+	{
 		
 		$data = array();
 		
 		// work out attributes 
-		foreach ($field as $key=>$value) {
-			if ($key != 'value' && $key != 'label' && $key != 'type') {
+		foreach ($field as $key=>$value) 
+		{
+			if ($key != 'value' && $key != 'label' && $key != 'type') 
+			{
 				$data[$key] = $value;
 			}
 		}
-		if (!isset($field->value)) $field->value = '';
+		if ( ! isset($field->value)) $field->value = '';
 
 		// set value as posted value
 		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
@@ -660,41 +731,50 @@ class Autoform {
 	 * @param Object $field
 	 * @return String
 	 */
-	private function checked_input($field) {
+	private function checked_input($field) 
+	{
 		
 		$data = array();
 		if ( ! isset($field->value)) $field->value = 1; // set default value
 		
 		// add class to label
-		if (isset($field->label->extra['class']) && !preg_match('/radio|checkbox/', $field->label->extra['class'])) { 
+		if (isset($field->label->extra['class']) && !preg_match('/radio|checkbox/', $field->label->extra['class'])) 
+		{ 
 			$field->label->extra['class'] .= ' '.$field->type;
 		}
-		elseif ( ! isset($field->label->extra['class'])) {
+		elseif ( ! isset($field->label->extra['class'])) 
+		{
 			$field->label->extra['class'] = $field->type;
 		}
 		
 		// add class to field
-		if (isset($field->class) && !preg_match('/radio|checkbox/', $field->class)) { 
+		if (isset($field->class) && !preg_match('/radio|checkbox/', $field->class)) 
+		{ 
 			$field->class .= ' '.$field->type;
 		}
-		elseif ( ! isset($field->class)) {
+		elseif ( ! isset($field->class)) 
+		{
 			$field->class = $field->type;
 		}
 		
 		// work out attributes 
-		foreach ($field as $key=>$value) {
-			if ($key != 'value' && $key != 'label' && $key != 'type') {
+		foreach ($field as $key=>$value) 
+		{
+			if ($key != 'value' && $key != 'label' && $key != 'type') 
+			{
 				$data[$key] = $value;
 			}
 		}
 		
 		// set checked status
-		$field->checked = (isset($_POST[$field->name]) && $this->CI->input->post($field->name) == $field->value ? true : false);
+		$field->checked = (isset($_POST[$field->name]) && $this->CI->input->post($field->name) == $field->value ? true : FALSE);
 		
 		// set checked status on posted array (fieldname[])
 		$raw_name = preg_replace('/^(.{0,})(\[\])$/', '$1', $field->name); // remove ending []
-		if (is_array($this->CI->input->post($raw_name))) {
-			if (in_array($field->value, $this->CI->input->post($raw_name))) {
+		if (is_array($this->CI->input->post($raw_name))) 
+		{
+			if (in_array($field->value, $this->CI->input->post($raw_name))) 
+			{
 				$field->checked = true;
 			}
 		}
@@ -709,18 +789,21 @@ class Autoform {
 	 * @param Object $field
 	 * @return String
 	 */
-	private function dropdown($field) {
+	private function dropdown($field) 
+	{
 		
 		$name = $field->name;
 		$options = (isset($field->options) ? $field->options : array());
 		$extra = array();
 		
-		foreach ($field as $key=>$value) {
-			if ($key!='name' && $key!='options' && $key != 'value' && $key != 'label' && $key!='type') {
+		foreach ($field as $key=>$value) 
+		{
+			if ($key!='name' && $key!='options' && $key != 'value' && $key != 'label' && $key!='type') 
+			{
 				$extra[$key] = $value;
 			}
 		}
-		if (!isset($field->value)) $field->value = '';
+		if ( ! isset($field->value)) $field->value = '';
 		
 		// set value as posted value
 		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
@@ -736,9 +819,11 @@ class Autoform {
 	 * @param Bool $multipart [optional]
 	 * @return String
 	 */
-	public function open($action, $attr=array('method'=>'post'), $multipart=FALSE) {
+	public function open($action, $attr=array('method'=>'post'), $multipart=FALSE) 
+	{
 		if ( ! isset($attr['method'])) $attr['method'] = 'post'; // set to POST as default
-		if ($multipart==TRUE) {
+		if ($multipart==TRUE) 
+		{
 			return form_open_multipart($action, $attr)."\n";
 		}
 		else {
@@ -752,19 +837,23 @@ class Autoform {
 	 * 
 	 * @return String 
 	 */
-	public function fields($field_order=FALSE) {
+	public function fields($field_order=FALSE) 
+	{
 		
 		$output = '';
 		
-		if (is_array($field_order)) {
-			foreach ($field_order as $field_id) {
-				if (!isset($this->fields->$field_id)) continue;// check field exists
+		if (is_array($field_order)) 
+		{
+			foreach ($field_order as $field_id) 
+			{
+				if ( ! isset($this->fields->$field_id)) continue;// check field exists
 				$output .= $this->build($this->fields->$field_id);
 			}
 		}
 		else {
 			// loop through fields
-			foreach ($this->fields as $field) {
+			foreach ($this->fields as $field) 
+			{
 				// validate field
 				$this->validate($field);
 				// generate field
@@ -780,7 +869,8 @@ class Autoform {
 	 * @param String $extra
 	 * @return String
 	 */
-	public function close($extra='') {
+	public function close($extra='') 
+	{
 		$this->clear(); // clear the form
 		return form_close($extra)."\n";
 	}
@@ -793,7 +883,8 @@ class Autoform {
 	 * @param Bool $multipart [optional]
 	 * @return String
 	 */
-	public function generate($action, $attr=array(), $multipart=FALSE) {
+	public function generate($action, $attr=array(), $multipart=FALSE) 
+	{
 		// open form
 		$output = $this->open($action, $attr, $multipart);
 		
@@ -815,11 +906,13 @@ class Autoform {
 	 * @param Array $attributes
 	 * @return String
 	 */
-	private function stringify($attributes) {
+	private function stringify($attributes) 
+	{
 		if (is_string($attributes)) return $attributes;
 		
 		$output = '';
-		foreach ($attributes as $attr=>$value) {
+		foreach ($attributes as $attr=>$value) 
+		{
 			$output .= $attr.'="'.$value.'" ';
 		}
 		return ' '.trim($output);
@@ -830,12 +923,15 @@ class Autoform {
 	 * @param Object $field_obj
 	 * @return Object
 	 */
-	private function unique_id(&$field_obj) {
+	private function unique_id(&$field_obj) 
+	{
 		$id = $field_obj->id;
-		if ($field_obj->id == $field_obj->name && isset($this->fields->$id) || isset($this->fields->$id)) {
+		if ($field_obj->id == $field_obj->name && isset($this->fields->$id) || isset($this->fields->$id)) 
+		{
 			
 			$i = 1;
-			while (isset($this->fields->{$id.'_'.$i})) {
+			while (isset($this->fields->{$id.'_'.$i})) 
+			{
 				$i++;
 			}
 		
@@ -849,7 +945,8 @@ class Autoform {
 	 * @return null
 	 * @param String $table_name
 	 */
-	public function table($table_name) {
+	public function table($table_name) 
+	{
 		$this->CI->load->database();
 		$this->process_field_data($this->CI->db->field_data($table_name));
 	}
@@ -860,9 +957,11 @@ class Autoform {
 	 * @return null
 	 * @param Mixed $query
 	 */
-	public function sql($query) {
+	public function sql($query) 
+	{
 		$this->CI->load->database();
-		if (is_string($query)) {
+		if (is_string($query)) 
+		{
 			$query = $this->CI->db->query($query);
 		}
 		$this->process_field_data($query->field_data(), $query);
@@ -874,11 +973,15 @@ class Autoform {
 	 * @return null
 	 * @param Object $fields
 	 */
-	private function process_field_data($field_data, $result = false) {
-		foreach ($field_data as $field) {
+	private function process_field_data($field_data, $result = FALSE) 
+	{
+		foreach ($field_data as $field) 
+		{
 			
-			if ($result) {
-				foreach ($result->result() as $field_value) {
+			if ($result) 
+			{
+				foreach ($result->result() as $field_value) 
+				{
 					$name = $field->name; 
 					$value = $field_value->$name;
 				}
@@ -907,9 +1010,11 @@ class Autoform {
 	 * @param Bool $include_hidden [optional] a boolean whether to ignore hidden fields or not
 	 * 
 	 */
-	public function wrap_each($before = '', $after = '', $fields = NULL, $exceptions = array(), $include_hidden = FALSE) {
+	public function wrap_each($before = '', $after = '', $fields = NULL, $exceptions = array(), $include_hidden = FALSE) 
+	{
 		
-		foreach ($this->fields as $field) {
+		foreach ($this->fields as $field) 
+		{
 			if (in_array($field->id, $exceptions) || is_array($fields) && ! in_array($field->id, $fields) || $field->type == 'hidden' && $include_hidden===FALSE) continue; // skip if in exceptions array}
 
 			$this->before($field->id, $before);
@@ -926,14 +1031,18 @@ class Autoform {
 	 * @param Bool $primary_key
 	 * @return String
 	 */
-	private function get_field_type($type, $primary_key = false) {
-		if ($primary_key) {
+	private function get_field_type($type, $primary_key = FALSE) 
+	{
+		if ($primary_key) 
+		{
 			return 'hidden';
 		}
-		else if ($type == 'text') {
+		else if ($type == 'text') 
+		{
 			return 'textarea';
 		}
-		else if ( isset ($this->field_types[$type])) {
+		else if ( isset ($this->field_types[$type])) 
+		{
 			return $this->field_types[$type];
 		}
 		else {
@@ -941,10 +1050,13 @@ class Autoform {
 		}
 	}
 
-	private function object_to_array($data) {
-		if(is_array($data) || is_object($data)) {
+	private function object_to_array($data) 
+	{
+		if(is_array($data) || is_object($data)) 
+		{
 			$result = array(); 
-			foreach($data as $key => $value) { 
+			foreach($data as $key => $value) 
+			{ 
 				$result[$key] = $this->object_to_array($value); 
 			}
 			return $result;
@@ -957,7 +1069,8 @@ class Autoform {
 	 * 
 	 * @return 
 	 */
-	public function clear() {
+	public function clear() 
+	{
 		$this->fields = NULL;
 		$this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'));
 	}

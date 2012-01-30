@@ -895,6 +895,29 @@ class Autoform {
 			$this->add($new_field);
 		}
 	}
+
+
+	/**
+	 * Wrap each field in $before & $after Strings
+	 * 
+	 * @param String $before
+	 * @param String $after
+	 * @param Array $fields [optional] an array of fields to wrap. othe fields will be ignored
+	 * @param Array $exceptions [optional] an array of fields to ignore
+	 * @param Bool $include_hidden [optional] a boolean whether to ignore hidden fields or not
+	 * 
+	 */
+	public function wrap_each($before = '', $after = '', $fields = NULL, $exceptions = array(), $include_hidden = FALSE) {
+		
+		foreach ($this->fields as $field) {
+			if (in_array($field->id, $exceptions) || is_array($fields) && ! in_array($field->id, $fields) || $field->type == 'hidden' && $include_hidden===FALSE) continue; // skip if in exceptions array}
+
+			$this->before($field->id, $before);
+			$this->after($field->id, $after);
+		}
+
+	}
+
 	
 	/**
 	 * Gets input type from field type

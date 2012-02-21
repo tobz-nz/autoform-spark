@@ -61,9 +61,6 @@ class Autoform {
 		// load required libraries & helpers
 		$this->CI->load->library('form_validation');
 		$this->CI->load->helper(array('array','form','url'));
-		
-		// remove <p>...</p> from error messages (spaces are trimmed later)
-		$this->CI->form_validation->set_error_delimiters(' ',' ');
 
 		// set fields as an empty object
 		$this->fields = new stdClass();
@@ -408,6 +405,11 @@ class Autoform {
 	 */
 	private function validate($fields) 
 	{
+		if ($this->inline_errors==TRUE) 
+		{
+			// remove <p>...</p> from error messages (spaces are trimmed later)
+			$this->CI->form_validation->set_error_delimiters(' ',' ');
+		}
 		
 		$error = FALSE;
 		

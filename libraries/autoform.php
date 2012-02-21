@@ -1073,7 +1073,8 @@ class Autoform {
 	 */
 	public function clear() 
 	{
-		$this->fields = NULL;
+		$this->inline_errors = TRUE;
+		$this->fields = new stdClass();
 		$this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'));
 	}
 	

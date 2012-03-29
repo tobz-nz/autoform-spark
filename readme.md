@@ -38,3 +38,10 @@ If you’re not basing your form an a DB table, that's fine too - you can build 
 Note: the value will always be overwritten to the value posted if the form fails validation.
 
 Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for more in depth documentation.
+
+## Change Log
+
+- 3.8.0
+-- added wrap_all method.
+-- bug fixes
+

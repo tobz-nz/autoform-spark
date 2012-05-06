@@ -180,9 +180,9 @@ The name attribute is required, and if you do not supply them, both id and the l
 <p>Insert a string after a field</p>
 <code>$this-&gt;autoform-&gt;after('<var>field_id</var>', '<var>&lt;/div&gt;</var>')</code>
 
-<h3>$this-&gt;autoform-&gt;wrap_all()</h3>
+<h3>$this-&gt;autoform-&gt;wrap_each()</h3>
 <p>Insert a string before &amp; after all fields (or a subset of fields). Leaving the third parameter empty will wrap all fields</p>
-<code>$this-&gt;autoform-&gt;wrap_all('<var>&lt;/p&gt;</var>', '<var>&lt;/p&gt;</var>', <var>array('field1','field3')</var>)</code>
+<code>$this-&gt;autoform-&gt;wrap_each('<var>&lt;/p&gt;</var>', '<var>&lt;/p&gt;</var>', <var>array('field1','field3')</var>)</code>
 
 <h3>$this-&gt;autoform-&gt;field()</h3>
 <p>Get a field's finalized html</p>

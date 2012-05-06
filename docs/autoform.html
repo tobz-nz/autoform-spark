@@ -125,6 +125,8 @@ function index() {
 	
 	echo $this->autoform->fields(array('email', 'name')); // if this parameter is left empty, all fields are returned in the order they were created.
 	echo $this->autoform->field('id');
+
+	echo $this->autoform->buttons;
 	
 	echo $this->autoform->close();
 		
@@ -148,6 +150,8 @@ function index() {
 	echo $this->autoform->add(array('name'=>'upload', 'type'=>'file', 'label'=>'Upload your file here'));
 	echo $this->autoform->add(array('name'=>'tick_me', 'type'=>'checkbox', 'value'=>1, 'checked'=>FALSE, 'label'=>array('content'=>'Tick me before you can upload','class'=>'monkey')));
 	echo $this->autoform->add(array('name'=>'choose_me', 'type'=>'select', 'value'=>1, 'options'=>array('1'=>'option 1', '2'=>'option 2')));
+
+	echo $this->autoform->buttons;
 	
 	echo $this->autoform->close();
 		

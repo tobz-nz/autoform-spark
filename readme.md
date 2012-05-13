@@ -31,6 +31,9 @@ If you’re not basing your form an a DB table, that's fine too - you can build 
 
 	// add and print at the same time
 	echo $this->autoform->add(array('type'=>'text','name'=>'example'));
+
+	// add the form subtmit button(s)
+	echo $this->autoform->buttons();
 	
 	echo $this->autoform->close();
 
@@ -40,6 +43,13 @@ Note: the value will always be overwritten to the value posted if the form fails
 Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for more in depth documentation.
 
 ## Change Log
+
+- 3.8.2
+-- add ability to pass an array of field id's to the set() method.
+-- add a buttons() method. This sets/gets the submit button markup.
+
+- 3.8.1
+-- correct & update documentation.
 
 - 3.8.0
 -- added wrap_all method.

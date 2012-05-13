@@ -221,6 +221,15 @@ class Autoform {
 	 */
 	public function set($field_id, $attr=array()) 
 	{
+		// set multiple fields in one go
+		if (is_array($field_id)) {
+			foreach ($field_id as $value)
+			{
+				$this->set($value, $attr);
+			}
+			return $field_id;
+		}
+
 		if (isset($this->fields->$field_id)) 
 		{
 			foreach ($attr as $key=>$value) 
@@ -864,6 +873,17 @@ class Autoform {
 		}
 		return $output;
 	}
+
+	/**
+	 * Set/Get the form's button markup
+	 * @param  String $value='' The mark to set as the button
+	 * @return The button markup
+	 */
+	public function buttons($value='')
+	{
+		if ($value) $this->buttons = $value;
+		return  $this->buttons;
+	}
 	
 	/**
 	 * Close the form
@@ -894,7 +914,7 @@ class Autoform {
 		$output .= $this->fields();
 		
 		// add buttons
-		$output .= $this->buttons;
+		$output .= $this->buttons();
 		
 		// close form
 		$output .= $this->close();

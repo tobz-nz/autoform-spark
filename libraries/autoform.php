@@ -935,11 +935,20 @@ class Autoform {
 		$output = '';
 		foreach ($attributes as $attr=>$value) 
 		{
-			$output .= $attr.'="'.$value.'" ';
+			// set boolean attributes
+			if ($value===TRUE && in_array($attr, array('checked','disabled','autoplay','async','autofocus','controls','default','defer','formnovalidate','hidden','ismap','itemscope','loop','multiple','novalidate','open','pubdate','readonly','required','reversed','scoped','seamless','selected'))) 
+			{
+				$output .= $attr.' ';
+			}
+			elseif ($value===FALSE) {}
+			else {
+				// set normal attributes
+				$output .= $attr.'="'.$value.'" ';
+			}
 		}
 		return ' '.trim($output);
 	}
-	
+
 	/**
 	 * Make a fields id unique
 	 * @param Object $field_obj

@@ -45,6 +45,7 @@ Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for 
 ## Change Log
 
 - 3.8.2
+-- add support for boolean attributes (required, autofocus, etc..) eg: array('autofocus'=>TRUE)
 -- add ability to pass an array of field id's to the set() method.
 -- add a buttons() method. This sets/gets the submit button markup.
 

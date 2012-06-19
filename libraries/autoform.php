@@ -80,6 +80,7 @@ class Autoform {
 	{
 		
 		// setup default label
+		$label = new stdClass();
 		$label->content = ucwords(preg_replace("/[_-]/",' ', $input['name']));
 		$label->for = (isset($input['id']) ? $input['id'] : url_title($input['name']));
 		if (isset($input['type'])&&$input['type']=='checkbox' || isset($input['type'])&&$input['type']=='radio') 

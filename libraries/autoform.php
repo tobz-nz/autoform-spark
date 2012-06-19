@@ -62,11 +62,8 @@ class Autoform {
 		$this->CI->load->library('form_validation');
 		$this->CI->load->helper(array('array','form','url'));
 
-		// set fields as an empty object
-		$this->fields = new stdClass();
-		
-		// set default buttons
-		$this->buttons = form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Submit'))."\n";
+		// reset form data to default
+		$this->clear();
 		
 	}
 	

@@ -705,6 +705,19 @@ class Autoform {
 		// set value as posted value
 		if ($this->CI->input->post($field->name)) $field->value = $this->CI->input->post($field->name);
 
+
+		// format date
+		if ($field->type == 'date' && isset($field->format)) 
+		{
+			if ($field->value!='0000-00-00 00:00:00')
+			{
+				$field->value = date($field->format, strtotime($field->value));
+			}
+			else {
+				$field->value = '';
+			}
+			unset($field->format);
+		}
 		
 		return form_input($data, htmlspecialchars($field->value, ENT_COMPAT, "UTF-8"), $this->stringify($extra));
 	}

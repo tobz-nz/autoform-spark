@@ -705,7 +705,7 @@ class Autoform {
 		// format date
 		if ($field->type == 'date' && isset($field->format)) 
 		{
-			if ($field->value!='0000-00-00 00:00:00')
+			if ($field->value && $field->value!='0000-00-00 00:00:00')
 			{
 				$field->value = date($field->format, strtotime($field->value));
 			}

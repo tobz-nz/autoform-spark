@@ -938,15 +938,15 @@ class Autoform {
 			// set boolean attributes
 			if ($value===TRUE && in_array($attr, array('checked','disabled','autoplay','async','autofocus','controls','default','defer','formnovalidate','hidden','ismap','itemscope','loop','multiple','novalidate','open','pubdate','readonly','required','reversed','scoped','seamless','selected'))) 
 			{
-				$output .= $attr.' ';
+				$output .= trim($attr).' ';
 			}
 			elseif ($value===FALSE) {}
 			else {
 				// set normal attributes
-				$output .= $attr.'="'.$value.'" ';
+				$output .= trim($attr).'="'.$value.'" ';
 			}
 		}
-		return ' '.trim($output);
+		return trim($output);
 	}
 
 	/**

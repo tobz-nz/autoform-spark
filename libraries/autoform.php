@@ -842,7 +842,7 @@ class Autoform {
 	 * @param Bool $multipart [optional]
 	 * @return String
 	 */
-	public function open($action, $attr=array('method'=>'post'), $multipart=FALSE) 
+	public function open($action='', $attr=array('method'=>'post'), $multipart=FALSE) 
 	{
 		if ( ! isset($attr['method'])) $attr['method'] = 'post'; // set to POST as default
 		if ($multipart==TRUE) 
@@ -917,7 +917,7 @@ class Autoform {
 	 * @param Bool $multipart [optional]
 	 * @return String
 	 */
-	public function generate($action, $attr=array(), $multipart=FALSE) 
+	public function generate($action='', $attr=array(), $multipart=FALSE) 
 	{
 		// open form
 		$output = $this->open($action, $attr, $multipart);

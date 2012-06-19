@@ -46,6 +46,7 @@ Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for 
 
 - 3.8.2
 -- add support for boolean attributes (required, autofocus, etc..) eg: array('autofocus'=>TRUE)
+-- the $action parameter is now optional (submits to the current url by default)
 -- fix an error in the fields() method.
 -- enable the formatting of date fields via a 'format' attribute.
 -- The get() method now returns the field value by default, instead of false.

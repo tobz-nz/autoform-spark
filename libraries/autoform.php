@@ -202,8 +202,7 @@ class Autoform {
 		{
 			foreach ($fields as $field) 
 			{
-				$id = $field;
-				if (isset($this->fields->$id)) unset($this->fields->$id);
+				if (isset($this->fields->$field)) unset($this->fields->$field);
 			}
 		}
 		else {

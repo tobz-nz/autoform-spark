@@ -293,7 +293,7 @@ class Autoform {
 	 * @param String $fallback [optional]
 	 * @return Mixed
 	 */
-	public function get($field_id, $params=FALSE, $fallback='') 
+	public function get($field_id, $params='value', $fallback='') 
 	{
 		$get = array();
 		if (is_array($params)) 

@@ -181,7 +181,6 @@ class Autoform {
 		// return final string
 		if ($return_object==FALSE) 
 		{
-			
 			// build field output and return it
 			return $this->build($this->fields->$id);
 		}
@@ -694,7 +693,7 @@ class Autoform {
 		// work out attributes 
 		foreach ($field as $key=>$value) 
 		{
-			if ($key!='name' && $key != 'value' && $key != 'label' && $key != 'type') 
+			if ( ! in_array($key, array('name','value','label','type')))
 			{
 				$extra[$key] = $value;
 			}
@@ -735,7 +734,7 @@ class Autoform {
 		// work out attributes 
 		foreach ($field as $key=>$value) 
 		{
-			if ($key != 'value' && $key != 'label' && $key != 'type') 
+			if ( ! in_array($key, array('value','label','type')))
 			{
 				$data[$key] = $value;
 			}
@@ -783,7 +782,7 @@ class Autoform {
 		// work out attributes 
 		foreach ($field as $key=>$value) 
 		{
-			if ($key != 'value' && $key != 'label' && $key != 'type') 
+			if ( ! in_array($key, array('value','label','type')) )
 			{
 				$data[$key] = $value;
 			}
@@ -821,7 +820,7 @@ class Autoform {
 		
 		foreach ($field as $key=>$value) 
 		{
-			if ($key!='name' && $key!='options' && $key != 'value' && $key != 'label' && $key!='type') 
+			if ( ! in_array($key, array('name','options','value','label','type')) )
 			{
 				$extra[$key] = $value;
 			}
@@ -870,7 +869,7 @@ class Autoform {
 			foreach ($field_order as $field_id) 
 			{
 				if ( ! isset($this->fields->$field_id)) continue;// check field exists
-				$output .= $this->build($this->fields->$field_id);
+				$output .= $this->Build($this->fields->$field_id);
 			}
 		}
 		else {

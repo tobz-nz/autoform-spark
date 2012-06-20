@@ -75,6 +75,8 @@ class Autoform {
 	 */
 	public function add($input, $return_object=FALSE) 
 	{
+		// create the field object
+		$field_obj = new stdClass();
 		
 		// setup default label
 		$label = new stdClass();

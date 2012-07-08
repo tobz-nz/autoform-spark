@@ -77,8 +77,12 @@ class Autoform {
 	public function add($input, $return_object=FALSE) 
 	{
 		
+		// setup default field_obj
+		$field_obj = new stdClass();
+
 		// setup default label
 		$label = new stdClass();
+		
 		$label->content = ucwords(preg_replace("/[_-]/",' ', $input['name']));
 		$label->for = (isset($input['id']) ? $input['id'] : url_title($input['name']));
 		if (isset($input['type'])&&$input['type']=='checkbox' || isset($input['type'])&&$input['type']=='radio') 

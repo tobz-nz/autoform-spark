@@ -29,6 +29,7 @@ class Autoform {
 	private $before = array();
 	private $after = array();
 	public $inline_errors = TRUE;
+	private $date_format = 'Y-m-d';
 	private $field_types = array (
 	'timestamp'=>'date',
 	'checkbox'=>'checkbox',
@@ -75,8 +76,6 @@ class Autoform {
 	 */
 	public function add($input, $return_object=FALSE) 
 	{
-		// create the field object
-		$field_obj = new stdClass();
 		
 		// setup default label
 		$label = new stdClass();
@@ -705,11 +704,11 @@ class Autoform {
 
 
 		// format date
-		if ($field->type == 'date' && isset($field->format)) 
+		if (in_array($field->type, array('date','datetime','datetime-local'))) 
 		{
-			if ($field->value && $field->value!='0000-00-00 00:00:00')
+			if ($field->value && !in_array($field->value, array('0000-00-00 00:00:00','1970-01-01','-')))
 			{
-				$field->value = date($field->format, strtotime($field->value));
+				$field->value = date(isset($field->format) ? $field->format : $this->date_format, strtotime($field->value));
 			}
 			else {
 				$field->value = '';

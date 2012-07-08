@@ -44,6 +44,10 @@ Install autoform and look at ./sparks/autoform/[version]/docs/autoform.html for 
 
 ## Change Log
 
+- 3.8.3
+-- tweak how date field value formats are set
+
+
 - 3.8.2
 -- tidy up misc code & fix some php5.4 warnings
 -- the $action parameter is now optional (submits to the current url by default)

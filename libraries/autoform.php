@@ -134,6 +134,9 @@ class Autoform {
 			} 
 			else {
 				// add other field attributes
+				if(!isset($field_obj)) {
+					$field_obj = new stdClass();
+				}
 				$field_obj->$key = ($value);
 			}
 		}

@@ -76,6 +76,8 @@ class Autoform {
 	public function add($input, $return_object=FALSE) 
 	{
 		
+		$field_obj = new stdClass;
+		
 		// setup default label
 		$label = new stdClass();
 		$label->content = ucwords(preg_replace("/[_-]/",' ', $input['name']));
